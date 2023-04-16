@@ -1,0 +1,35 @@
+- name: Upgrade all packages
+  dnf:
+    name: "*"
+    state: latest
+
+- name: Install extra packages
+  dnf:
+    name:
+    - bat
+    - bottom
+    - exa
+    - fd-find # required for fzf.fish
+    - fish
+    - fzf
+    - git
+    - gnome-tweak-tool
+    - golang
+    - htop
+    - iotop
+    - jq
+    - ripgrep
+    - tmux
+    - vim-enhanced
+    - z
+    state: installed
+
+- name: Install extra fonts
+  dnf:
+    name: jetbrains-mono-fonts
+    state: installed
+  when: install_extra_fonts
+
+- name: Install starship
+  ansible.builtin.import_role:
+    name: andrewrothstein.starship

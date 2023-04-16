@@ -1,0 +1,12 @@
+---
+- name: Install VS Code
+  dnf:
+    name: code
+    state: present
+  when: install_vscode
+    
+- name: Install 1Password
+  dnf:
+    name: 1password
+    state: present
+  when: install_1password

@@ -1,0 +1,10 @@
+---
+- name: Set dnf max parallel downloads to 10
+  lineinfile:
+    path: /etc/dnf/dnf.conf
+    line: max_parallel_downloads=10
+
+- name: Set dnf fastestmirror to true
+  lineinfile:
+    path: /etc/dnf/dnf.conf
+    line: fastestmirror=True
