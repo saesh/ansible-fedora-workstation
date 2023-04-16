@@ -18,6 +18,7 @@
     - htop
     - iotop
     - jq
+    - mozilla-openh264
     - ripgrep
     - tmux
     - vim-enhanced
