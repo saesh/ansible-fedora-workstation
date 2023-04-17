@@ -1,2 +1,0 @@
-[fedora_workstation]
-localhost ansible_connection=local

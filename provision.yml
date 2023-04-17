@@ -1,6 +1,7 @@
 ---
 - name: Setup Fedora Workstation
-  hosts: fedora_workstation
+  hosts: "localhost"
+  connection: local
   become: true
   gather_facts: true
 
