@@ -20,6 +20,7 @@
     - jq
     - mozilla-openh264
     - ripgrep
+    - smartmontools
     - tmux
     - vim-enhanced
     - z
