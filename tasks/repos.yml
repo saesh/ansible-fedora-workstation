@@ -44,11 +44,10 @@
   
   when: install_1password
 
-- block:
-  - name: Enable copr atim/bottom
-    community.general.copr:
-      state: enabled
-      name: atim/bottom
+- name: Enable copr atim/bottom
+  community.general.copr:
+    state: enabled
+    name: atim/bottom
 
 - name: Enable flatpak repository
   become: no
