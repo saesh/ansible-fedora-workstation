@@ -10,3 +10,10 @@
     name: 1password
     state: present
   when: install_1password
+
+- name: Install blackbox terminal
+  become: no
+  flatpak:
+    name: com.raggesilver.BlackBox
+    state: present
+    method: user
