@@ -1,10 +1,10 @@
 ---
-- block:
-  - name: Save username
-    become: no
-    shell: whoami
-    register: username
+- name: Save username
+  become: no
+  shell: whoami
+  register: username
 
+- block:
   - name: Change shell to fish
     user:
       name: "{{ username.stdout }}"
@@ -21,3 +21,14 @@
       dest: /home/{{ username.stdout }}/.config/fish/fish_plugins
 
   when: use_fish_shell
+
+- name: Create docker group
+  group:
+    name: "docker"
+    state: present
+
+- name: Add user to group
+  user:
+    name: "{{ username.stdout }}"
+    groups: docker
+    append: yes

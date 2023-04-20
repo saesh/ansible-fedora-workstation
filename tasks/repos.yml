@@ -3,6 +3,10 @@
   - name: Check for vscode repo
     stat: path=/etc/yum.repos.d/vscode.repo
     register: fedora_vscode_installed
+  
+  - name: Check for docker-ce repo
+    stat: path=/etc/yum.repos.d/docker-ce.repo
+    register: fedora_docker_installed
 
   - name: Import Microsoft GPG key
     rpm_key:
@@ -56,3 +60,7 @@
     state: present
     flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
     method: user
+
+- name: Add Docker repo
+  command: dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+  when: not fedora_docker_installed.stat.exists

@@ -8,3 +8,9 @@
   lineinfile:
     path: /etc/dnf/dnf.conf
     line: fastestmirror=True
+
+- name: Enable and start docker service
+  systemd:
+    name: docker
+    enabled: yes
+    state: started

@@ -9,8 +9,8 @@
     - vars/vars.yml
 
   tasks:
-    - include_tasks: tasks/system.yml
     - include_tasks: tasks/repos.yml
     - include_tasks: tasks/packages.yml
     - include_tasks: tasks/software.yml
+    - include_tasks: tasks/system.yml
     - include_tasks: tasks/users.yml
