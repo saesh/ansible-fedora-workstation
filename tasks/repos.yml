@@ -1,51 +1,51 @@
 ---
 - block:
-  - name: Check for vscode repo
-    stat: path=/etc/yum.repos.d/vscode.repo
-    register: fedora_vscode_installed
-  
-  - name: Check for docker-ce repo
-    stat: path=/etc/yum.repos.d/docker-ce.repo
-    register: fedora_docker_installed
+    - name: Check for vscode repo
+      stat: path=/etc/yum.repos.d/vscode.repo
+      register: fedora_vscode_installed
 
-  - name: Import Microsoft GPG key
-    rpm_key:
-      state: present
-      key: https://packages.microsoft.com/keys/microsoft.asc
+    - name: Check for docker-ce repo
+      stat: path=/etc/yum.repos.d/docker-ce.repo
+      register: fedora_docker_installed
 
-  - name: Enable vscode repo
-    yum_repository:
-      name: code
-      description: Visual Studio Code
-      file: vscode
-      baseurl: 'https://packages.microsoft.com/yumrepos/vscode'
-      gpgkey: 'https://packages.microsoft.com/keys/microsoft.asc'
-      gpgcheck: yes
-    when: not fedora_vscode_installed.stat.exists
+    - name: Import Microsoft GPG key
+      rpm_key:
+        state: present
+        key: https://packages.microsoft.com/keys/microsoft.asc
+
+    - name: Enable vscode repo
+      yum_repository:
+        name: code
+        description: Visual Studio Code
+        file: vscode
+        baseurl: "https://packages.microsoft.com/yumrepos/vscode"
+        gpgkey: "https://packages.microsoft.com/keys/microsoft.asc"
+        gpgcheck: yes
+      when: not fedora_vscode_installed.stat.exists
 
   when: install_vscode
 
 - block:
-  - name: Check for 1Password repo
-    stat: path=/etc/yum.repos.d/1password.repo
-    register: fedora_1password_installed
+    - name: Check for 1Password repo
+      stat: path=/etc/yum.repos.d/1password.repo
+      register: fedora_1password_installed
 
-  - name: Import 1Password GPG key
-    rpm_key:
-      state: present
-      key: https://downloads.1password.com/linux/keys/1password.asc
-  
-  - name: Enable 1Password repo
-    yum_repository:
-      name: 1password
-      description: 1Password Stable Channel
-      file: 1password
-      baseurl: https://downloads.1password.com/linux/rpm/stable/$basearch
-      gpgkey: https://downloads.1password.com/linux/keys/1password.asc
-      gpgcheck: yes
-      repo_gpgcheck: yes
-    when: not fedora_1password_installed.stat.exists
-  
+    - name: Import 1Password GPG key
+      rpm_key:
+        state: present
+        key: https://downloads.1password.com/linux/keys/1password.asc
+
+    - name: Enable 1Password repo
+      yum_repository:
+        name: 1password
+        description: 1Password Stable Channel
+        file: 1password
+        baseurl: https://downloads.1password.com/linux/rpm/stable/$basearch
+        gpgkey: https://downloads.1password.com/linux/keys/1password.asc
+        gpgcheck: yes
+        repo_gpgcheck: yes
+      when: not fedora_1password_installed.stat.exists
+
   when: install_1password
 
 - name: Enable copr atim/bottom
@@ -54,7 +54,7 @@
     name: atim/bottom
 
 - name: Enable flatpak repository
-  become: no
+  become: false
   community.general.flatpak_remote:
     name: flathub
     state: present

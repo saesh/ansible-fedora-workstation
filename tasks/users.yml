@@ -1,24 +1,25 @@
 ---
 - name: Save username
-  become: no
+  become: false
   shell: whoami
   register: username
+  changed_when: false
 
 - block:
-  - name: Change shell to fish
-    user:
-      name: "{{ username.stdout }}"
-      shell: /usr/bin/fish
-  
-  - name: Copy fish.config
-    copy:
-      src: files/fish/config.fish
-      dest: /home/{{ username.stdout }}/.config/fish/config.fish
-  
-  - name: Copy fish plugins file
-    copy:
-      src: files/fish/fish_plugins
-      dest: /home/{{ username.stdout }}/.config/fish/fish_plugins
+    - name: Change shell to fish
+      user:
+        name: "{{ username.stdout }}"
+        shell: /usr/bin/fish
+
+    - name: Copy fish.config
+      copy:
+        src: files/fish/config.fish
+        dest: /home/{{ username.stdout }}/.config/fish/config.fish
+
+    - name: Copy fish plugins file
+      copy:
+        src: files/fish/fish_plugins
+        dest: /home/{{ username.stdout }}/.config/fish/fish_plugins
 
   when: use_fish_shell
 

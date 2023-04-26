@@ -2,28 +2,29 @@
   dnf:
     name: "*"
     state: latest
+  when: always_update_packages
 
 - name: Install extra packages
   dnf:
     name:
-    - bat
-    - bottom
-    - exa
-    - fd-find # required for fzf.fish
-    - fish
-    - fzf
-    - git
-    - gnome-tweak-tool
-    - golang
-    - htop
-    - iotop
-    - jq
-    - mozilla-openh264
-    - ripgrep
-    - smartmontools
-    - tmux
-    - vim-enhanced
-    - z
+      - bat
+      - bottom
+      - exa
+      - fd-find # required for fzf.fish
+      - fish
+      - fzf
+      - git
+      - gnome-tweak-tool
+      - golang
+      - htop
+      - iotop
+      - jq
+      - mozilla-openh264
+      - ripgrep
+      - smartmontools
+      - tmux
+      - vim-enhanced
+      - z
     state: installed
 
 - name: Install extra fonts
