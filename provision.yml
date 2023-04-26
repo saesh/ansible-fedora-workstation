@@ -14,3 +14,7 @@
     - include_tasks: tasks/software.yml
     - include_tasks: tasks/system.yml
     - include_tasks: tasks/users.yml
+
+  handlers:
+    - name: reload systemd
+      command: systemctl daemon-reload

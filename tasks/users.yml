@@ -33,3 +33,13 @@
     name: "{{ username.stdout }}"
     groups: docker
     append: yes
+
+- name: Auto-mount document-inbox
+  ansible.posix.mount:
+    path: /home/{{ username.stdout }}/document-inbox
+    src: //{{ document_host }}/document-inbox
+    fstype: cifs
+    opts: credentials=/home/{{ username.stdout }}/.smb,uid=1000,gid=1000,nofail,soft,x-systemd.device-timeout=10ms
+    state: present
+  notify:
+    - reload systemd

@@ -1,6 +1,7 @@
 ---
+always_update_packages: false
 install_extra_fonts: true
 install_vscode: true
 install_1password: true
-
 use_fish_shell: true
+document_host: blackbox
