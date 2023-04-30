@@ -21,10 +21,13 @@
       - iotop
       - jq
       - mozilla-openh264
+      - NetworkManager-l2tp
+      - NetworkManager-l2tp-gnome
       - ripgrep
       - smartmontools
       - tmux
       - vim-enhanced
+      - xl2tpd
       - z
     state: installed
 
