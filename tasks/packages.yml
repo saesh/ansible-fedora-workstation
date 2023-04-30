@@ -15,6 +15,7 @@
       - fuse-sshfs
       - fzf
       - git
+      - gnome-extensions-app
       - gnome-tweak-tool
       - golang
       - htop
