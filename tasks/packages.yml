@@ -22,8 +22,6 @@
       - iotop
       - jq
       - mozilla-openh264
-      - NetworkManager-l2tp
-      - NetworkManager-l2tp-gnome
       - ripgrep
       - smartmontools
       - tmux
