@@ -29,6 +29,7 @@
       - tmux
       - vim-enhanced
       - xl2tpd
+      - youtube-dl
       - z
     state: installed
 
