@@ -1,0 +1,55 @@
+---
+- block:
+    - name: Create ~/.local/share/fonts
+      become: false
+      file:
+        path: "{{ lookup('env', 'HOME') }}/.local/share/fonts"
+        state: directory
+
+    - name: JetBrains Mono Nerd Font exists
+      become: false
+      changed_when: false
+      shell: "ls {{ lookup('env', 'HOME') }}/.local/share/fonts/JetBrainsMono*NerdFont*"
+      register: jetbrainsmono_exists
+      ignore_errors: true
+
+    - name: Download JetBrains Mono Nerd Font
+      become: false
+      when: jetbrainsmono_exists is failed
+      get_url:
+        url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip
+        dest: "{{ lookup('env', 'HOME') }}/.local/share/fonts/JetBrainsMono.zip"
+
+    - name: Unpack JetBrains Mono Nerd Font
+      when: jetbrainsmono_exists is failed
+      unarchive:
+        src: "{{ lookup('env', 'HOME') }}/.local/share/fonts/JetBrainsMono.zip"
+        dest: "{{ lookup('env', 'HOME') }}/.local/share/fonts"
+
+    - name: Remove JetBrainsMono.zip
+      when: jetbrainsmono_exists is failed
+      file:
+        path: "{{ lookup('env', 'HOME') }}/.local/share/fonts/JetBrainsMono.zip"
+        state: absent
+
+    - name: Register txt and md files
+      when: jetbrainsmono_exists is failed
+      find:
+        paths: "{{ lookup('env', 'HOME') }}/.local/share/fonts"
+        patterns:
+          - "*.txt"
+          - "*.md"
+      register: find_results
+
+    - name: Remove txt and md files
+      when: jetbrainsmono_exists is failed
+      file:
+        path: "{{ item['path'] }}"
+        state: absent
+      with_items: "{{ find_results['files'] }}"
+
+    - name: Update font cache
+      when: jetbrainsmono_exists is failed
+      command: fc-cache /home/{{username}}/.local/share/fonts
+
+  when: install_extra_fonts
