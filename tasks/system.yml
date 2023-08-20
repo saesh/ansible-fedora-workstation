@@ -14,3 +14,7 @@
     name: docker
     enabled: yes
     state: started
+
+- name: Enable minimize/maximize buttons
+  become: false
+  command: gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,maximize,close"
