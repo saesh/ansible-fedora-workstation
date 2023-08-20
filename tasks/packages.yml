@@ -47,6 +47,28 @@
       - z
     state: installed
 
+- name: Windows boot entry exists
+  command: grep "^menuentry.*Windows Boot Manager.*" /boot/grub2/grub.cfg
+  register: windows_boot_entry
+  changed_when: false
+  ignore_errors: true
+
+- name: Register refind installed
+  stat:
+    path: /boot/efi/EFI/refind
+  register: refind_efi_directory
+
+- name: Install refind
+  dnf:
+    name: rEFInd
+    state: present
+  when: windows_boot_entry.rc == 0 and not refind_efi_directory.stat.exists
+
+- name: Execute refind install
+  changed_when: false
+  command: refind-install
+  when: windows_boot_entry.rc == 0 and not refind_efi_directory.stat.exists
+
 - name: Install starship
   ansible.builtin.import_role:
     name: andrewrothstein.starship

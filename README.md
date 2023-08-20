@@ -22,11 +22,12 @@ ansible-playbook --ask-become provision.yml
 
 ## Manual steps:
 
- - VS Code: sign in to settings sync
- - 1Password: enable SSH agent
- - Install gnome extensions:
-   - https://extensions.gnome.org/extension/779/clipboard-indicator/
-   - https://extensions.gnome.org/extension/4703/dock-from-dash/
-   - https://extensions.gnome.org/extension/3737/hue-lights/
-   - https://extensions.gnome.org/extension/6/applications-menu/
-   - https://extensions.gnome.org/extension/4099/no-overview/
+  - VS Code: sign in to settings sync
+  - 1Password: enable SSH agent
+  - Install gnome extensions:
+    - https://extensions.gnome.org/extension/779/clipboard-indicator/
+    - https://extensions.gnome.org/extension/4703/dock-from-dash/
+    - https://extensions.gnome.org/extension/3737/hue-lights/
+    - https://extensions.gnome.org/extension/6/applications-menu/
+    - https://extensions.gnome.org/extension/4099/no-overview/
+  - install refind theme: https://github.com/bobafetthotmail/refind-theme-regular
