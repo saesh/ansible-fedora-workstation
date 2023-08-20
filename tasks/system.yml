@@ -13,3 +13,18 @@
   become: false
   changed_when: false
   command: gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
+
+- name: Map caps lock to ctrl
+  become: false
+  changed_when: false
+  command: dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:ctrl_modifier']"
+
+- name: Show all input sources
+  become: false
+  changed_when: false
+  command: gsettings set org.gnome.desktop.input-sources show-all-sources true
+
+- name: Set EurKey keyboard layout
+  become: false
+  changed_when: false
+  command: gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'eu')]"
