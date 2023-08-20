@@ -12,34 +12,57 @@
         shell: /usr/bin/fish
 
     - name: Copy fish.config
+      become: false
       copy:
         src: files/fish/config.fish
-        dest: /home/{{ username.stdout }}/.config/fish/config.fish
+        dest: "{{ lookup('env', 'HOME') }}/.config/fish/config.fish"
+
+    - name: fish_plugins exist
+      become: false
+      ignore_errors: true
+      shell: "ls {{ lookup('env', 'HOME') }}/.config/fish/fish_plugins"
+      register: fish_plugins_exist
+
+    - name: Install fisher
+      become: false
+      when: fish_plugins_exist is failed
+      get_url:
+        url: https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish
+        dest: "{{ lookup('env', 'HOME') }}/.config/fish/functions/fisher.fish"
 
     - name: Copy fish plugins file
+      become: false
+      when: fish_plugins_exist is failed
       copy:
         src: files/fish/fish_plugins
-        dest: /home/{{ username.stdout }}/.config/fish/fish_plugins
+        dest: "{{ lookup('env', 'HOME') }}/.config/fish/fish_plugins"
+
+    - name: Update fish plugins
+      become: false
+      when: fish_plugins_exist is failed
+      command: /usr/bin/fish -c 'fisher update'
 
   when: use_fish_shell
 
-- name: Create docker group
-  group:
-    name: "docker"
-    state: present
-
-- name: Add user to group
+- name: Add user to group docker
   user:
     name: "{{ username.stdout }}"
     groups: docker
     append: yes
 
+- name: .smb exists
+  become: false
+  changed_when: false
+  shell: "ls {{ lookup('env', 'HOME') }}/.smb"
+  register: smb_credentials_file_exists
+  ignore_errors: true
+
 - name: Copy smb credentials file
+  become: false
+  when: smb_credentials_file_exists is failed
   ansible.builtin.copy:
     src: files/.smb
-    dest: /home/{{ username.stdout }}/.smb
-    owner: "{{ username.stdout }}"
-    group: "{{ username.stdout }}"
+    dest: "{{ lookup('env', 'HOME') }}/.smb"
     mode: "0600"
 
 - name: Auto-mount document-inbox
