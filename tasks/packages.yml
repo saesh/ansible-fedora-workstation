@@ -1,14 +1,30 @@
+---
 - name: Upgrade all packages
   dnf:
     name: "*"
     state: latest
   when: always_update_packages
 
+- name: Set dnf max parallel downloads to 10
+  lineinfile:
+    path: /etc/dnf/dnf.conf
+    line: max_parallel_downloads=10
+
+- name: Set dnf fastestmirror to true
+  lineinfile:
+    path: /etc/dnf/dnf.conf
+    line: fastestmirror=True
+
 - name: Install extra packages
   dnf:
     name:
       - bat
       - bottom
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
       - exa
       - fd-find # required for fzf.fish
       - fish
@@ -34,3 +50,14 @@
 - name: Install starship
   ansible.builtin.import_role:
     name: andrewrothstein.starship
+
+- name: Enable and start docker service
+  systemd:
+    name: docker
+    enabled: yes
+    state: started
+
+- name: Create docker group
+  group:
+    name: "docker"
+    state: present

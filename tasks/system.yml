@@ -1,20 +1,15 @@
 ---
-- name: Set dnf max parallel downloads to 10
-  lineinfile:
-    path: /etc/dnf/dnf.conf
-    line: max_parallel_downloads=10
-
-- name: Set dnf fastestmirror to true
-  lineinfile:
-    path: /etc/dnf/dnf.conf
-    line: fastestmirror=True
-
-- name: Enable and start docker service
-  systemd:
-    name: docker
-    enabled: yes
-    state: started
-
 - name: Enable minimize/maximize buttons
   become: false
+  changed_when: false
   command: gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,maximize,close"
+
+- name: Remove logout delay
+  become: false
+  changed_when: false
+  command: gsettings set org.gnome.SessionManager logout-prompt false
+
+- name: Enable nightlight
+  become: false
+  changed_when: false
+  command: gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
