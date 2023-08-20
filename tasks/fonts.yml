@@ -21,6 +21,7 @@
         dest: "{{ lookup('env', 'HOME') }}/.local/share/fonts/JetBrainsMono.zip"
 
     - name: Unpack JetBrains Mono Nerd Font
+      become: false
       when: jetbrainsmono_exists is failed
       unarchive:
         src: "{{ lookup('env', 'HOME') }}/.local/share/fonts/JetBrainsMono.zip"
@@ -49,7 +50,8 @@
       with_items: "{{ find_results['files'] }}"
 
     - name: Update font cache
+      become: false
       when: jetbrainsmono_exists is failed
-      command: fc-cache /home/{{username}}/.local/share/fonts
+      command: fc-cache {{ lookup('env', 'HOME') }}/.local/share/fonts
 
   when: install_extra_fonts
