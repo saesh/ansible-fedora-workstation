@@ -5,10 +5,10 @@ set -gx EDITOR vim
 abbr uu "sudo dnf upgrade && sudo dnf autoremove"
 
 # exa, ls alternative
-if type -sq exa
-    alias ls='exa'
-    alias ll='exa --long --git'
-    alias la='exa --all --long --git'
+if type -sq eza
+    alias ls='eza'
+    alias ll='eza --long --git'
+    alias la='eza --all --long --git'
 end
 
 # starship prompt
