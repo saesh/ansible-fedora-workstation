@@ -1,0 +1,36 @@
+---
+- name: Install docker packages
+  dnf:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+      - docker-compose
+
+- name: Create docker group
+  group:
+    name: "docker"
+    state: present
+
+# - name: Configure firewall for inter-container traffic
+#   ansible.posix.firewalld:
+#     rich_rule: "rule family=ipv4 source address=172.0.0.0/8 accept"
+#     zone: public
+#     permanent: true
+#     state: enabled
+
+# - name: Firewall add masquerade
+#   ansible.posix.firewalld:
+#     zone: public
+#     masquerade: yes
+#     permanent: true
+#     immediate: true
+#     state: enabled
+
+- name: Enable and start docker service
+  systemd:
+    name: docker
+    enabled: yes
+    state: started
