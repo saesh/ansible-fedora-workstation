@@ -38,6 +38,7 @@
       - iotop
       - jq
       - mozilla-openh264
+      - neovim
       - ripgrep
       - smartmontools
       - tmux
