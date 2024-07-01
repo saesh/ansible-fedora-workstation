@@ -37,6 +37,7 @@
       - htop
       - iotop
       - jq
+      - lazygit # requires copr repo in repos.yml
       - mozilla-openh264
       - neovim
       - ripgrep
